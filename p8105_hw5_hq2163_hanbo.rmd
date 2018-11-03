@@ -17,4 +17,36 @@ library(tidyverse)
 theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5)))
 ```
 
+##Problem 1
+
+**Start with a dataframe containing all file names:**
+
+```{r}
+vec_names = list.files("./data", all.files = TRUE, full.names = FALSE) 
+
+vec_names = vec_names[-1:-2]
+```
+
+**Iterate over file names, read in data for each subject, and save the result as a new variable in the dataframe**
+
+```{r}
+read_files = function(file_name) {
+  
+  read_csv(file = file_name）
+  
+}
+
+com_names = str_c( "./data/", vec_names)
+
+df_names = as_tibble(vec_names) %>% 
+  mutate(data = map(com_names, read_files))
+```
+
+**Tidy the result; manipulate file names to include control arm and subject ID; make the observations “tidy”**
+
+```{r}
+
+```
+
+
 
