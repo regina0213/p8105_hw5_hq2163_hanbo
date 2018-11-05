@@ -281,7 +281,7 @@ Problem 2
 
 ``` r
 homicides = read_csv(file = "./homicide-data.csv") %>% 
-   mutate(city_state = str_c(city, ",", state))
+   mutate(city_state = str_c(city, ", ", state))
 ## Parsed with column specification:
 ## cols(
 ##   uid = col_character(),
@@ -299,14 +299,30 @@ homicides = read_csv(file = "./homicide-data.csv") %>%
 ## )
 
 total_homi = homicides %>% 
-   filter(disposition == "Closed without arrest") %>% 
-   group_by(city) %>% 
-   summarize(total_homi = n())
+   group_by(city_state) %>% 
+   summarize(total_num = n())
 
 unsolved_homi = homicides %>% 
-   filter(disposition == "Open/No arrest") %>% 
-   group_by(city) %>% 
-   summarize(unsolved_homi = n())
+   filter(disposition %in% c("Open/No arrest", "Closed without arrest")) %>% 
+   group_by(city_state) %>% 
+   summarize(unsolved_num = n())
 ```
 
 The raw data is collected by The Washington Post to represent a decade of homicide arrest data from 50 of the nation’s largest cities. The dataframe's dimension is 52179, 13. In each observation, we can figure out the basic information of the victim in each case of homicide. In "disposition" variable, the case was catagorized into "Closed by arrest", "Closed without arrest" and "Open/No arrest". After importing the data, we create a city\_state variable to combine "city"" and "state" variable, summarize within cities to obtain the total number of homicides which is stored in the subset "total\_homi" and the number of unsolved homicides in the subset "unsolved\_homi".
+
+**For the city of Baltimore, MD, use the prop.test function to estimate the proportion of homicides that are unsolved; save the output of prop.test as an R object, apply the broom::tidy to this object and pull the estimated proportion and confidence intervals from the resulting tidy dataframe.**
+
+``` r
+com_homi = inner_join(total_homi, unsolved_homi, by = "city_state" ) %>% 
+  filter(city_state == "Baltimore, MD")
+
+  result = prop.test(com_homi[[3]], com_homi[[2]])
+  broom::tidy(result) %>% 
+  select(estimate, conf.low, conf.high )
+## # A tibble: 1 x 3
+##   estimate conf.low conf.high
+##      <dbl>    <dbl>     <dbl>
+## 1    0.646    0.628     0.663
+```
+
+For the city Baltimore, the estimated proportion of homicides that are unsolved is 0.646, the confidence intervals is (0.628,0.663).
