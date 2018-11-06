@@ -324,3 +324,48 @@ com_homi = inner_join(total_homi, unsolved_homi, by = "city_state" ) %>%
 For the city Baltimore, the estimated proportion of homicides that are unsolved is 0.646, the lower confidence is 0.628, the upper 0.663.
 
 **Now run prop.test for each of the cities in your dataset, and extract both the proportion of unsolved homicides and the confidence interval for each. Do this within a “tidy” pipeline, making use of purrr::map, purrr::map2, list columns and unnest as necessary to create a tidy dataframe with estimated proportions and CIs for each city.**
+
+``` r
+
+allcity_total = homicides %>% 
+   group_by(city_state) %>% 
+   summarize(total_num = n())
+
+allcity_unsolved = homicides %>% 
+   filter(disposition %in% c("Open/No arrest", "Closed without arrest")) %>% 
+   group_by(city_state) %>% 
+   summarize(unsolved_num = n())
+
+allcity_com = inner_join(allcity_total, allcity_unsolved, by = "city_state")
+  
+  test = function(n_unsolve, n_total) {
+    prop.test(n_unsolve, n_total) %>% 
+  broom::tidy(test) %>% 
+  select(estimate, conf.low, conf.high)
+}
+ 
+  all_result = map2_dfr(.x = allcity_com[[3]], .y =  allcity_com[[2]],~test(n_unsolve = .x, n_total = .y)) %>%     bind_cols(allcity_com) %>%
+  select(city_state, estimate: conf.high) %>% 
+    janitor::clean_names()
+```
+
+We make a function "test" to produce estimate and CI, and iterate over for each of the cities in dataset. Then we extract both the proportion of unsolved homicides and the confidence interval from results to store them in a dataframe named "all\_result".
+
+**Create a plot that shows the estimates and CIs for each city state check out geom\_errorbar for a way to add error bars based on the upper and lower limits. Organize cities according to the proportion of unsolved homicides.**
+
+``` r
+all_result %>% 
+  mutate(city_state = fct_reorder(city_state, estimate)) %>% 
+  ggplot(aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(mapping = aes(ymax = conf_high, ymin = conf_low))+
+  labs(
+    title = "The proportion of unsolved homicides and CIs for each city state",
+    x = "city_state",
+    y = "The proportion of unsolved homicides",
+    caption = "Data from The Washington Post"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+<img src="p8105_hw5_hq2163_hanbo_files/figure-markdown_github/unnamed-chunk-8-1.png" width="90%" />

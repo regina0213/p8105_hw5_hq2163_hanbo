@@ -121,9 +121,27 @@ allcity_com = inner_join(allcity_total, allcity_unsolved, by = "city_state")
 }
  
   all_result = map2_dfr(.x = allcity_com[[3]], .y =  allcity_com[[2]],~test(n_unsolve = .x, n_total = .y)) %>%     bind_cols(allcity_com) %>%
-  select(city_state, estimate: conf.high)
+  select(city_state, estimate: conf.high) %>% 
+    janitor::clean_names()
 ```
 
-We make a function "test" to produce estimate and CI, and iterate over for each of the cities in dataset. Then we extract both the proportion of unsolved homicides and the confidence interval from results to store them in a dataframe.
+We make a function "test" to produce estimate and CI, and iterate over for each of the cities in dataset. Then we extract both the proportion of unsolved homicides and the confidence interval from results to store them in a dataframe named "all_result".
+
+**Create a plot that shows the estimates and CIs for each city state check out geom_errorbar for a way to add error bars based on the upper and lower limits. Organize cities according to the proportion of unsolved homicides.**
+
+```{r}
+all_result %>% 
+  mutate(city_state = fct_reorder(city_state, estimate)) %>% 
+  ggplot(aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(mapping = aes(ymax = conf_high, ymin = conf_low))+
+  labs(
+    title = "The proportion of unsolved homicides and CIs for each city state",
+    x = "city_state",
+    y = "The proportion of unsolved homicides",
+    caption = "Data from The Washington Post"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
 
 
