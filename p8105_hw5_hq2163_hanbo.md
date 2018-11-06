@@ -316,13 +316,11 @@ The raw data is collected by The Washington Post to represent a decade of homici
 com_homi = inner_join(total_homi, unsolved_homi, by = "city_state" ) %>% 
   filter(city_state == "Baltimore, MD")
 
-  result = prop.test(com_homi[[3]], com_homi[[2]])
+  result = prop.test(com_homi[[3]], com_homi[[2]]) %>% 
   broom::tidy(result) %>% 
   select(estimate, conf.low, conf.high )
-## # A tibble: 1 x 3
-##   estimate conf.low conf.high
-##      <dbl>    <dbl>     <dbl>
-## 1    0.646    0.628     0.663
 ```
 
-For the city Baltimore, the estimated proportion of homicides that are unsolved is 0.646, the confidence intervals is (0.628,0.663).
+For the city Baltimore, the estimated proportion of homicides that are unsolved is 0.646, the lower confidence is 0.628, the upper 0.663.
+
+**Now run prop.test for each of the cities in your dataset, and extract both the proportion of unsolved homicides and the confidence interval for each. Do this within a “tidy” pipeline, making use of purrr::map, purrr::map2, list columns and unnest as necessary to create a tidy dataframe with estimated proportions and CIs for each city.**

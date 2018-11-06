@@ -92,9 +92,38 @@ The raw data is collected by The Washington Post to represent a decade of homici
 com_homi = inner_join(total_homi, unsolved_homi, by = "city_state" ) %>% 
   filter(city_state == "Baltimore, MD")
 
-  result = prop.test(com_homi[[3]], com_homi[[2]])
+  result = prop.test(com_homi[[3]], com_homi[[2]]) %>% 
   broom::tidy(result) %>% 
   select(estimate, conf.low, conf.high )
 ```
 
-For the city Baltimore, the estimated proportion of homicides that are unsolved is 0.646, the confidence intervals is (0.628,0.663).
+For the city Baltimore, the estimated proportion of homicides that are unsolved is `r round(result[1], digits = 3)`, the lower confidence is `r round(result[2],digits = 3)`, the upper `r round(result[3],digits = 3)`.
+
+**Now run prop.test for each of the cities in your dataset, and extract both the proportion of unsolved homicides and the confidence interval for each. Do this within a “tidy” pipeline, making use of  purrr::map, purrr::map2, list columns and unnest as necessary to create a tidy dataframe with estimated proportions and CIs for each city.**
+
+```{r}
+
+allcity_total = homicides %>% 
+   group_by(city_state) %>% 
+   summarize(total_num = n())
+
+allcity_unsolved = homicides %>% 
+   filter(disposition %in% c("Open/No arrest", "Closed without arrest")) %>% 
+   group_by(city_state) %>% 
+   summarize(unsolved_num = n())
+
+allcity_com = inner_join(allcity_total, allcity_unsolved, by = "city_state")
+  
+  test = function(n_unsolve, n_total) {
+    prop.test(n_unsolve, n_total) %>% 
+  broom::tidy(test) %>% 
+  select(estimate, conf.low, conf.high)
+}
+ 
+  all_result = map2_dfr(.x = allcity_com[[3]], .y =  allcity_com[[2]],~test(n_unsolve = .x, n_total = .y)) %>%     bind_cols(allcity_com) %>%
+  select(city_state, estimate: conf.high)
+```
+
+We make a function "test" to produce estimate and CI, and iterate over for each of the cities in dataset. Then we extract both the proportion of unsolved homicides and the confidence interval from results to store them in a dataframe.
+
+
