@@ -26,8 +26,7 @@ df_names = as_tibble(vec_names) %>%
 **Tidy the result; manipulate file names to include control arm and subject ID; make the observations “tidy”**
 
 ``` r
-df_names = df_names %>% 
-  mutate(group = str_sub(value, 1, 3), no = 1:20) %>% 
+df_names = mutate(df_names, group = str_sub(value, 1, 3), no = 1:20) %>% 
   unnest() %>% 
   gather(key = week, value = value, week_1: week_8)
 ```
@@ -77,13 +76,12 @@ total_homi = homicides %>%
    group_by(city_state) %>% 
    summarize(total_num = n())
 
-unsolved_homi = homicides %>% 
-   filter(disposition %in% c("Open/No arrest", "Closed without arrest")) %>% 
+unsolved_homi = filter(homicides, disposition %in% c("Open/No arrest", "Closed without arrest")) %>% 
    group_by(city_state) %>% 
    summarize(unsolved_num = n())
 ```
 
-The raw data is collected by The Washington Post to represent a decade of homicide arrest data from 50 of the nation’s largest cities. The dataframe's dimension is 52179\*13. In each observation, we can figure out the basic information of the victim in each case of homicide. In "disposition" variable, the case was catagorized into "Closed by arrest", "Closed without arrest" and "Open/No arrest". After importing the data, we create a `city_state` variable to combine `city` and `state` variables, summarize within cities to obtain the total number of homicides which is stored in the subset `total_homi` and the number of unsolved homicides in the subset `unsolved_homi`.
+The raw data is collected by The Washington Post to represent a decade of homicide arrest data from 50 of the nation’s largest cities. The dataframe's dimension is 52179 \* 13. In each observation, we can figure out the basic information of the victim in each case of homicide. In "disposition" variable, the case was catagorized into "Closed by arrest", "Closed without arrest" and "Open/No arrest". After importing the data, we create a `city_state` variable to combine `city` and `state` variables, summarize within cities to obtain the total number of homicides which is stored in the subset `total_homi` and the number of unsolved homicides in the subset `unsolved_homi`.
 
 **For the city of Baltimore, MD, use the prop.test function to estimate the proportion of homicides that are unsolved; save the output of prop.test as an R object, apply the broom::tidy to this object and pull the estimated proportion and confidence intervals from the resulting tidy dataframe.**
 
