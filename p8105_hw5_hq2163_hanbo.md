@@ -17,236 +17,10 @@ vec_names = vec_names[-1:-2]
 **Iterate over file names, read in data for each subject, and save the result as a new variable in the dataframe**
 
 ``` r
-read_files = function(file_name) {
-  
-  read_csv(file = file_name）
-  
-}
-
-com_names = str_c( "./data/", vec_names)
-
 df_names = as_tibble(vec_names) %>% 
-  mutate(data = map(com_names, read_files))
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_integer(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
-## Parsed with column specification:
-## cols(
-##   week_1 = col_double(),
-##   week_2 = col_double(),
-##   week_3 = col_double(),
-##   week_4 = col_double(),
-##   week_5 = col_double(),
-##   week_6 = col_double(),
-##   week_7 = col_double(),
-##   week_8 = col_double()
-## )
+  mutate(path_names = str_c( "./data/", vec_names), 
+         data = map(.x = path_names, ~read_csv(file = .x, col_types = "dddddddd"))) %>% 
+  select(-path_names)
 ```
 
 **Tidy the result; manipulate file names to include control arm and subject ID; make the observations “tidy”**
@@ -262,13 +36,14 @@ df_names = df_names %>%
 
 ``` r
 df_names %>% 
-   ggplot(aes(x = week, y = value, color = group, group = no)) +
-   geom_path() + labs(
+  ggplot(aes(x = week, y = value, color = group, group = no)) +
+  geom_path() + 
+  labs(
     title = "Individual observations of two groups on each subject in 8 weeks",
     x = "Week",
     y = "Individual observations",
     caption = "Data from a longitudinal study"
-  ) +
+    ) +
   theme(legend.position = "right")
 ```
 
@@ -308,48 +83,45 @@ unsolved_homi = homicides %>%
    summarize(unsolved_num = n())
 ```
 
-The raw data is collected by The Washington Post to represent a decade of homicide arrest data from 50 of the nation’s largest cities. The dataframe's dimension is 52179, 13. In each observation, we can figure out the basic information of the victim in each case of homicide. In "disposition" variable, the case was catagorized into "Closed by arrest", "Closed without arrest" and "Open/No arrest". After importing the data, we create a city\_state variable to combine "city"" and "state" variable, summarize within cities to obtain the total number of homicides which is stored in the subset "total\_homi" and the number of unsolved homicides in the subset "unsolved\_homi".
+The raw data is collected by The Washington Post to represent a decade of homicide arrest data from 50 of the nation’s largest cities. The dataframe's dimension is 52179\*13. In each observation, we can figure out the basic information of the victim in each case of homicide. In "disposition" variable, the case was catagorized into "Closed by arrest", "Closed without arrest" and "Open/No arrest". After importing the data, we create a `city_state` variable to combine `city` and `state` variables, summarize within cities to obtain the total number of homicides which is stored in the subset `total_homi` and the number of unsolved homicides in the subset `unsolved_homi`.
 
 **For the city of Baltimore, MD, use the prop.test function to estimate the proportion of homicides that are unsolved; save the output of prop.test as an R object, apply the broom::tidy to this object and pull the estimated proportion and confidence intervals from the resulting tidy dataframe.**
 
 ``` r
-com_homi = inner_join(total_homi, unsolved_homi, by = "city_state" ) %>% 
-  filter(city_state == "Baltimore, MD")
+all_homi = inner_join(unsolved_homi, total_homi, by = "city_state" )
 
-  result = prop.test(com_homi[[3]], com_homi[[2]]) %>% 
+baltimore_homi = filter(all_homi, city_state == "Baltimore, MD")
+
+prop.test(baltimore_homi[[2]], baltimore_homi[[3]]) %>% 
   broom::tidy(result) %>% 
-  select(estimate, conf.low, conf.high )
+  mutate(city_state = "Baltimore, MD") %>% 
+  select(city_state, estimate, conf.low, conf.high ) %>% 
+  knitr::kable(col.names = c("City", "Estimate", "Conf.low", "Conf.high"),
+               digits = 3)
 ```
 
-For the city Baltimore, the estimated proportion of homicides that are unsolved is 0.646, the lower confidence is 0.628, the upper 0.663.
+| City          |  Estimate|  Conf.low|  Conf.high|
+|:--------------|---------:|---------:|----------:|
+| Baltimore, MD |     0.646|     0.628|      0.663|
+
+The table above shows the estimated proportion and confidence interval of homicides in Baltimore, MD.
 
 **Now run prop.test for each of the cities in your dataset, and extract both the proportion of unsolved homicides and the confidence interval for each. Do this within a “tidy” pipeline, making use of purrr::map, purrr::map2, list columns and unnest as necessary to create a tidy dataframe with estimated proportions and CIs for each city.**
 
 ``` r
-
-allcity_total = homicides %>% 
-   group_by(city_state) %>% 
-   summarize(total_num = n())
-
-allcity_unsolved = homicides %>% 
-   filter(disposition %in% c("Open/No arrest", "Closed without arrest")) %>% 
-   group_by(city_state) %>% 
-   summarize(unsolved_num = n())
-
-allcity_com = inner_join(allcity_total, allcity_unsolved, by = "city_state")
-  
-  test = function(n_unsolve, n_total) {
-    prop.test(n_unsolve, n_total) %>% 
+test = function(n_unsolve, n_total) {
+  prop.test(n_unsolve, n_total) %>% 
   broom::tidy(test) %>% 
   select(estimate, conf.low, conf.high)
 }
  
-  all_result = map2_dfr(.x = allcity_com[[3]], .y =  allcity_com[[2]],~test(n_unsolve = .x, n_total = .y)) %>%     bind_cols(allcity_com) %>%
-  select(city_state, estimate: conf.high) %>% 
-    janitor::clean_names()
+all_result = map2_dfr(.x = all_homi[[2]], .y =  all_homi[[3]], ~test(n_unsolve = .x, n_total = .y)) %>%
+  bind_cols(all_homi) %>%
+  select(city_state, estimate:conf.high) %>% 
+  janitor::clean_names()
 ```
 
-We make a function "test" to produce estimate and CI, and iterate over for each of the cities in dataset. Then we extract both the proportion of unsolved homicides and the confidence interval from results to store them in a dataframe named "all\_result".
+We make a function `test` to produce estimate and CI, and iterate over for each of the cities in dataset. Then we extract both the proportion of unsolved homicides and the confidence interval from results to store them in a dataframe named `all_result`.
 
 **Create a plot that shows the estimates and CIs for each city state check out geom\_errorbar for a way to add error bars based on the upper and lower limits. Organize cities according to the proportion of unsolved homicides.**
 
@@ -358,10 +130,10 @@ all_result %>%
   mutate(city_state = fct_reorder(city_state, estimate)) %>% 
   ggplot(aes(x = city_state, y = estimate)) +
   geom_point() +
-  geom_errorbar(mapping = aes(ymax = conf_high, ymin = conf_low))+
+  geom_errorbar(mapping = aes(ymax = conf_high, ymin = conf_low)) +
   labs(
     title = "The proportion of unsolved homicides and CIs for each city state",
-    x = "city_state",
+    x = "City",
     y = "The proportion of unsolved homicides",
     caption = "Data from The Washington Post"
   ) +
